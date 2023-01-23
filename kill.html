@@ -1,0 +1,36 @@
+<html>
+<head>
+  <title>Evolution Simulator</title>
+  <script src="evolsim.js"></script>
+</head>
+<body>
+  <script>
+    var creatures = JSON.parse(localStorage.species);
+
+    function GetSortOrder(prop) {
+    return function(a, b) {
+            if (a[prop] > b[prop]) {
+                return 1;
+            } else if (a[prop] < b[prop]) {
+                return -1;
+            }
+            return 0;
+        }
+    }
+
+    function kill() {
+      //Sort creatures
+      creatures.sort(GetSortOrder("avgxpos"));
+      //Half Array
+      creatures.splice(0, Math.floor(creatures.length / 2));
+
+      info.innerHTML = "Here are the remaining creatures: <button onclick='location.href = \"reproduce.html\";'>Reproduce</button>";
+      drawAll(creatures);
+      localStorage.species = JSON.stringify(creatures);
+    }
+  </script>
+  <p id="info">We have just tested <script>document.write(creatures.length);</script> creatures. We will now kill some to simulate natural selection.
+    The half that got furthest to the right will live, and the other half shall die.
+    <button onclick="kill();">Kill Half</button></p>
+</body>
+</html>

@@ -1,0 +1,12 @@
+<html>
+<head>
+  <title>Evolution Simulator</title>
+  <script src="evolsim.js"></script>
+</head>
+<body>
+  <p>Evolution Simulator!</p>
+  <button onclick="localStorage.species = JSON.stringify(generateSpecies(20)); localStorage.generation = 1; location.href='firstview.html';">Generate 20 Species and Start</button>
+  <p>Or: <button onclick="drawCreature(generateSpecies(1)[0], document.getElementById('creatureView'), 200);">Generate one and view</button></p>
+  <canvas id="creatureView"></canvas>
+</body>
+</html>

@@ -1,0 +1,10 @@
+<html>
+<head>
+  <title>Evolution Simulator</title>
+  <script src="evolsim.js"></script>
+</head>
+<body>
+  <p>Here are your creatures, click one to view a simulation: <button onclick="location.href = 'testCreatures.html';">Test Creatures</button></p>
+  <script>drawAll(JSON.parse(localStorage.species));</script>
+</body>
+</html>

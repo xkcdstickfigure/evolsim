@@ -1,0 +1,35 @@
+<html>
+<head>
+  <title>Evolution Simulator</title>
+  <script src="evolsim.js"></script>
+</head>
+<body>
+  <script>
+    var creatures = JSON.parse(localStorage.species);
+    /*
+    The standard simulation speed in 1 frame every 2ms. Look at that sweet 500fps.
+    So 1 second is 500 movements, then 10 seconds (testing time) will be 5000 movements.
+    */
+    function test() {
+      testBtn.disabled = true;
+      var a = 0;
+      var testInterval = setInterval(function () {
+        if (a >= creatures.length) {
+          localStorage.species = JSON.stringify(creatures);
+          nextBtn.disabled = false;
+          return clearInterval(testInterval);
+        }
+        var org = JSON.parse(JSON.stringify(creatures[a])); //Copy, not mutate.
+        for (var b = 0; b < 5000; b++) {
+          org = moveCreature(org, 4.5);
+        }
+        creatures[a].avgxpos = avgxpos(org.points);
+        testCount.innerText = Number(testCount.innerText) + 1;
+        a++;
+      }, 100);
+    }
+  </script>
+  <p>Each creature must get as far to the right as they can in 10 seconds (5000 movements). Because JavaScript, we can speed this up to do all <script>document.write(creatures.length);</script> creatures in a few hundred milliseconds, maybe.</p>
+  <p><button id="testBtn" onclick="test();">Test</button> <span id="testCount">0</span> / <script>document.write(creatures.length);</script> done. <button onclick="location.href = 'kill.html';" id="nextBtn" disabled>Next</button></p>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<html>
+<head>
+  <title>Evolution Simulator</title>
+  <script src="evolsim.js"></script>
+</head>
+<body>
+  <p>Meet generation <script>localStorage.generation = Number(localStorage.generation) + 1; document.write(localStorage.generation);</script>: <button onclick="location.href = 'testCreatures.html';">Test</button></p>
+  <script>
+    var creatures = JSON.parse(localStorage.species);
+    var nextGen = [];
+    for (var a = 0; a < creatures.length; a++) {
+      for (var b = 0; b < 2; b++) {
+        var creatureData = JSON.parse(JSON.stringify(creatures[a]));
+        for (var c = 0; c < creatureData.points.length; c++) {
+          creatureData.points[c].offsetX += Math.random() - 0.5;
+          creatureData.points[c].offsetY += Math.random() - 0.5;
+          if (creatureData.points.length < 6 && Math.floor(Math.random() * 5) === 0) { //New point
+            for (var d = 0; d < 2; d++) {
+              creatureData.joints[Math.floor(Math.random() * creatureData.points.length) + "-" + creatureData.points.length] = {
+                stretch: Math.random() * 5 + 1
+              };
+            }
+            creatureData.points.push({
+              offsetX: Math.random() * 10 - 5,
+              offsetY: Math.random() * 10 - 5,
+              size: Math.random() * 5 + 1
+            });
+          }
+        }
+        nextGen.push(creatureData);
+      }
+    }
+    drawAll(nextGen);
+    localStorage.species = JSON.stringify(nextGen);
+  </script>
+</body>
+</html>
